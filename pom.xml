@@ -29,11 +29,11 @@
         </developer>
     </developers>
 
-    <scm>
-        <connection>scm:git:git@github.com:chenggangpro/reactive-redis-distributed-lock.git</connection>
-        <developerConnection>scm:git:git@github.com:chenggangpro/reactive-redis-distributed-lock.git</developerConnection>
-        <url>https://github.com/chenggangpro/reactive-redis-distributed-lock</url>
-    </scm>
+<!--    <scm>-->
+<!--        <connection>scm:git:git@github.com:chenggangpro/reactive-redis-distributed-lock.git</connection>-->
+<!--        <developerConnection>scm:git:git@github.com:chenggangpro/reactive-redis-distributed-lock.git</developerConnection>-->
+<!--        <url>https://github.com/chenggangpro/reactive-redis-distributed-lock</url>-->
+<!--    </scm>-->
 
     <properties>
         <java.version>11</java.version>
