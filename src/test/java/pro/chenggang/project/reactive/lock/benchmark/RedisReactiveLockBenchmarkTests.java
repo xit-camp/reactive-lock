@@ -1,5 +1,6 @@
 package pro.chenggang.project.reactive.lock.benchmark;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
@@ -34,6 +35,7 @@ import java.util.concurrent.TimeUnit;
  * @author Gang Cheng
  * @since 1.0.0
  */
+@Disabled
 public class RedisReactiveLockBenchmarkTests {
 
     @BeforeTestClass

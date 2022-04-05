@@ -1,5 +1,6 @@
 package pro.chenggang.project.reactive.lock.tests;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  */
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(classes = ReactiveLockApplication.class)
+@Disabled
 public class RedisReactiveLockTests {
 
     @Autowired
