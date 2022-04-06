@@ -48,6 +48,7 @@ jobs:
 
       - name: Release with Maven
         run: |
+          git config --global user.email "$GIT_USER_EMAIL"
           VER=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
           RELV=${VER%%-*}
           REL=${RELEASE_PREFIX:+$RELEASE_PREFIX-}r$RELV
