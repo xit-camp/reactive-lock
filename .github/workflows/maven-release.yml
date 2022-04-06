@@ -47,6 +47,8 @@ jobs:
           cd $PD && rm -rf ../dry-run
 
       - name: Release with Maven
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.email "$GIT_USER_EMAIL"
           mkdir -p ~/.m2
