@@ -50,8 +50,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $1}')"
-          git config --local user.email "$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $1}')"
+          git config --local user.email "m.brezovsky@gmail.com"
+          git config --local user.name "m.brezovsky@gmail.com"
           mkdir -p ~/.m2
           echo "<settings><servers><server><id>github</id><username>$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $1}')</username><password>\${env.GITHUB_TOKEN}</password></server></servers></settings>" > ~/.m2/settings.xml
           REPO="github::default::https://maven.pkg.github.com/${GITHUB_REPOSITORY}"
