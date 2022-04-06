@@ -32,22 +32,30 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Test
-        run: echo "test"
+      - name: Dry run
+        run: |
+          PD=$(pwd)
+          cp -r . ../dry-run && cd ../dry-run
+          mvn --batch-mode release:prepare -DdryRun -DpushChanges=false \
+            -Darguments='-Dmaven.javadoc.failOnError=false -Dmaven.deploy.skip=true -Dmaven.site.skip=true -Ddocker.skip.push=true -DskipITs'
+          cd $PD && rm -rf ../dry-run
 
-#      - name: Build with Maven
-#        run: mvn -B package --file pom.xml
-#
-#      - name: Release with Maven
-#        run: mvn -B package --file pom.xml
-#
-#      - name: Publish to GitHub Packages Apache Maven
-#
-#        env:
-#          # GITHUB_REPOSITORY: The owner and repository name. For example, octocat/Hello-World.
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        run: |
-#          mkdir -p ~/.m2
-#          echo "<settings><servers><server><id>github</id><username>$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $1}')</username><password>\${env.GITHUB_TOKEN}</password></server></servers></settings>" > ~/.m2/settings.xml
-#          REPO="github::default::https://maven.pkg.github.com/${GITHUB_REPOSITORY}"
-#          mvn -Dmaven.test.skip -B deploy -DaltDeploymentRepository="${REPO}" -DaltReleaseDeploymentRepository="${REPO}" -DaltSnapshotDeploymentRepository="${REPO}"
+      - name: Release with Maven
+        run: |
+          VER=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
+          RELV=${VER%%-*}
+          REL=${RELEASE_PREFIX:+$RELEASE_PREFIX-}r$RELV
+          mvn --batch-mode clean release:clean release:prepare release:perform \
+            -DtagNameFormat=${RELEASE_PREFIX:+$RELEASE_PREFIX-}v@{project.version} \
+            -DpushChanges=false \
+            -DlocalCheckout=true \
+            -Darguments='-Dmaven.javadoc.failOnError=false -Dmaven.deploy.skip=true -Dmaven.site.skip=true -Ddocker.skip=true -Ddocker.skip.push=true -DskipITs'
+
+      - name: Publish to GitHub Packages Apache Maven
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p ~/.m2
+          echo "<settings><servers><server><id>github</id><username>$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $1}')</username><password>\${env.GITHUB_TOKEN}</password></server></servers></settings>" > ~/.m2/settings.xml
+          REPO="github::default::https://maven.pkg.github.com/${GITHUB_REPOSITORY}"
+          mvn -Dmaven.test.skip -B deploy -DaltDeploymentRepository="${REPO}" -DaltReleaseDeploymentRepository="${REPO}" -DaltSnapshotDeploymentRepository="${REPO}"
