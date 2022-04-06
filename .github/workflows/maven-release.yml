@@ -33,10 +33,15 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Dry run
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PD=$(pwd)
           cp -r . ../dry-run && cd ../dry-run
+          echo "<settings><servers><server><id>github</id><username>$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $1}')</username><password>\${env.GITHUB_TOKEN}</password></server></servers></settings>" > ~/.m2/settings.xml
+          REPO="github::default::https://maven.pkg.github.com/${GITHUB_REPOSITORY}"
           mvn --batch-mode release:prepare -DdryRun -DpushChanges=false \
+            -DaltDeploymentRepository="${REPO}" -DaltReleaseDeploymentRepository="${REPO}" -DaltSnapshotDeploymentRepository="${REPO}" \
             -Darguments='-Dmaven.javadoc.failOnError=false -Dmaven.deploy.skip=true -Dmaven.site.skip=true -Ddocker.skip.push=true -DskipITs'
           cd $PD && rm -rf ../dry-run
 
