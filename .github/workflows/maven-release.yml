@@ -63,7 +63,8 @@ jobs:
             -DpushChanges=false \
             -DlocalCheckout=true \
             -DaltDeploymentRepository="${REPO}" -DaltReleaseDeploymentRepository="${REPO}" -DaltSnapshotDeploymentRepository="${REPO}" \
-            -Darguments='-Dmaven.javadoc.failOnError=false -Dmaven.deploy.skip=true -Dmaven.site.skip=true -Ddocker.skip=true -Ddocker.skip.push=true -DskipITs'
+            -DconnectionUrl=scm:git:git@github.com:xit-camp/reactive-lock.git \
+            -Darguments='-Dmaven.javadoc.failOnError=false -Dmaven.deploy.skip=false -Dmaven.site.skip=true -Ddocker.skip=true -Ddocker.skip.push=true -DskipITs'
 
       - name: Publish to GitHub Packages Apache Maven
         env:
