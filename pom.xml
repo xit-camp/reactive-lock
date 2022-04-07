@@ -35,6 +35,19 @@
         <url>https://github.com/xit-camp/reactive-lock</url>
     </scm>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub</name>
+            <url>https://maven.pkg.github.com/xit-camp/reactive-lock</url>
+        </repository>
+        <site>
+            <id>gh-pages</id>
+            <name>Github</name>
+            <url>scm:git:ssh://git@github.com/xit-camp/reactive-lock.git</url>
+        </site>
+    </distributionManagement>
+
     <properties>
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
