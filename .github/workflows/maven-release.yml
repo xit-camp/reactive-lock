@@ -48,21 +48,19 @@ jobs:
 
       - name: Release with Maven
         env:
+          GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --local user.email "m.brezovsky@gmail.com"
           git config --local user.name "m.brezovsky@gmail.com"
           mkdir -p ~/.m2
-          echo "<settings><servers><server><id>github</id><username>$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $1}')</username><password>\${env.GITHUB_TOKEN}</password></server></servers></settings>" > ~/.m2/settings.xml
-          REPO="github::default::https://maven.pkg.github.com/${GITHUB_REPOSITORY}"
           VER=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
           RELV=${VER%%-*}
           REL=${RELEASE_PREFIX:+$RELEASE_PREFIX-}r$RELV
-          mvn --batch-mode clean release:clean release:prepare release:perform \
+          mvn --settings settings.xml --batch-mode clean release:clean release:prepare release:perform \
             -DtagNameFormat=${RELEASE_PREFIX:+$RELEASE_PREFIX-}v@{project.version} \
             -DpushChanges=false \
             -DlocalCheckout=true \
-            -DaltDeploymentRepository="${REPO}" -DaltReleaseDeploymentRepository="${REPO}" -DaltSnapshotDeploymentRepository="${REPO}" \
             -DconnectionUrl=scm:git:git@github.com:xit-camp/reactive-lock.git \
             -Darguments='-Dmaven.javadoc.failOnError=false -Dmaven.deploy.skip=false -Dmaven.site.skip=true -Ddocker.skip=true -Ddocker.skip.push=true -DskipITs'
 
@@ -72,6 +70,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mkdir -p ~/.m2
-          echo "<settings><servers><server><id>github</id><username>$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $1}')</username><password>\${env.GITHUB_TOKEN}</password></server></servers></settings>" > ~/.m2/settings.xml
-          REPO="github::default::https://maven.pkg.github.com/${GITHUB_REPOSITORY}"
           mvn --settings settings.xml --file pom.xml -Dmaven.test.skip -B deploy
