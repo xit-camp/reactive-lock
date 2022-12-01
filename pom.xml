@@ -35,45 +35,12 @@
         <url>https://github.com/xit-camp/reactive-lock</url>
     </scm>
 
-<!--    <distributionManagement>-->
-<!--        <repository>-->
-<!--            <id>github</id>-->
-<!--            <name>GitHub</name>-->
-<!--            <url>https://maven.pkg.github.com/xit-camp/reactive-lock</url>-->
-<!--        </repository>-->
-<!--&lt;!&ndash;        <snapshotRepository>&ndash;&gt;-->
-<!--&lt;!&ndash;            <id>xit-proxy</id>&ndash;&gt;-->
-<!--&lt;!&ndash;            <url>https://repository.xit.camp/repository/maven-snapshots/</url>&ndash;&gt;-->
-<!--&lt;!&ndash;        </snapshotRepository>&ndash;&gt;-->
-<!--        <repository>-->
-<!--            <id>xit-proxy</id>-->
-<!--            <name>all xIT proxy repositories group</name>-->
-<!--            <url>https://repository.xit.camp/repository/maven-proxy/</url>-->
-<!--            <layout>default</layout>-->
-<!--            <snapshots>-->
-<!--                <enabled>true</enabled>-->
-<!--            </snapshots>-->
-<!--        </repository>-->
-<!--    </distributionManagement>-->
-
     <distributionManagement>
         <repository>
             <id>github</id>
             <url>https://maven.pkg.github.com/xit-camp/reactive-lock</url>
         </repository>
     </distributionManagement>
-
-<!--    <repositories>-->
-<!--        <repository>-->
-<!--            <id>xit-hosted</id>-->
-<!--            <name>all xIT hosted repositories group</name>-->
-<!--            <url>https://repository.xit.camp/repository/maven-hosted/</url>-->
-<!--            <layout>default</layout>-->
-<!--            <snapshots>-->
-<!--                <enabled>true</enabled>-->
-<!--            </snapshots>-->
-<!--        </repository>-->
-<!--    </repositories>-->
 
     <properties>
         <java.version>11</java.version>
